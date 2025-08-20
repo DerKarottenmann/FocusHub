@@ -1,0 +1,28 @@
+____
+
+# Grobe Anforderungen
+
+- **Retro-Display**  
+  Anzeige von Zielen und Wetterdaten (z.B. Tidbyt: https://www.amazon.de/Tidbyt-Intelligentes-Retro-Display-Echtzeit-Wetter-Sportergebnissen/dp/B0CVR4R2XD)
+
+- **2 LED-Leisten**  
+  Visualisierung von Pausen- und Lernzeiten
+
+- **Ring-LED**  
+  Anzeige des Gesamtfortschritts
+
+- **Tasten**  
+  Steuerung und Bedienung des Geräts
+
+- **Vibration**  
+  Eccentric-Weight-Vibration für haptisches Feedback
+
+- **Akku**  
+  Kompakte Batterie für mobilen Einsatz (z.B. im Urlaub)
+
+- **Individuelles LED-Panel**  
+  Darstellung der Streak (Lern-/Arbeitsserien)
+
+- **Design-LEDs**  
+  LEDs zur Gestaltung und individuellen Anpassung
+
