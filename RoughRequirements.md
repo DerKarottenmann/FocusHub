@@ -26,3 +26,6 @@ ____
 - **Design-LEDs**  
   LEDs zur Gestaltung und individuellen Anpassung
 
+- **WLAN-Funktionalität**  
+  Das Gerät verfügt über WLAN und kann einfach per WPS eingerichtet werden. Die Verbindung erfolgt über das WLAN-Modul des ESP32.
+
