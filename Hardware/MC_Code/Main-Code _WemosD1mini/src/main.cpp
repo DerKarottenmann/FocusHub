@@ -24,6 +24,7 @@ void blinkLED() {
     delay(500);
   }
 }
+//test
 
 bool checkAndResetWifi() {
   pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP); // Taster gegen GND
