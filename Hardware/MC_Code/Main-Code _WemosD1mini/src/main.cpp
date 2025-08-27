@@ -12,37 +12,37 @@
 #include <ESP8266WiFiType.h>
 // #include <ESP8266WiFiWPS.h>
 
-#define RESET_BUTTON_PIN D3  // Passe den Pin ggf. an
+#define RESET_BUTTON_PIN D3
 #define CLEAR_BUTTON_PIN D1
-#define LED_PIN D4          // Onboard LED (D4 für Wemos D1 Mini)
+#define LED_PIN D4
 
 void blinkLED() {
+  pinMode(LED_PIN, OUTPUT);
   while (true) {
-    digitalWrite(LED_PIN, LOW); // LED an (LOW, da Onboard LED gegen GND geschaltet ist)
-    delay(500);
-    digitalWrite(LED_PIN, HIGH); // LED aus
-    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    Serial.println("LED AN");
+    delay(2500);
+    digitalWrite(LED_PIN, HIGH);
+    Serial.println("LED AUS");
+    delay(2500);
   }
 }
-//test
 
 bool checkAndResetWifi() {
-  pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP); // Taster gegen GND
+  pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP);
   unsigned long pressedTime = 0;
-  const unsigned long requiredHold = 5000; // 5 Sekunden
+  const unsigned long requiredHold = 5000;
 
-  // Prüfe beim Booten, ob der Taster gedrückt ist
   if (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
     Serial.println("Clear-Taster erkannt. Bitte gedrückt halten...");
     pressedTime = millis();
     while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
       if (millis() - pressedTime >= requiredHold) {
         Serial.println("Taster 5 Sekunden gehalten. WLAN-Daten werden gelöscht...");
-        WiFi.disconnect(true); // Löscht gespeicherte WLAN-Daten
+        WiFi.disconnect(true);
         delay(1000);
         Serial.println("Starte WPS...");
         while (WiFi.status() != WL_CONNECTED) {
-
           if (WiFi.beginWPSConfig()) {
             Serial.println("WPS erfolgreich!");
             Serial.print("Verbunden mit: ");
@@ -50,27 +50,27 @@ bool checkAndResetWifi() {
             Serial.println("Warte auf IP-Adresse...");
             while (WiFi.status() != WL_CONNECTED) {
               delay(1000);
-              Serial.print(".");              
+              Serial.print(".");
             }
             Serial.print("IP-Adresse: ");
             Serial.println(WiFi.localIP());
-          }
-          else {
+          } else {
             Serial.println("WPS fehlgeschlagen.");
+            blinkLED();
           }
           delay(500);
         }
-        return true; // Reset durchgeführt        
+        return true;
         break;
       }
       delay(10);
     }
     if (millis() - pressedTime < requiredHold) {
       Serial.println("Taster nicht lange genug gehalten. Kein Reset.");
-      return false; // Kein Reset durchgeführt
+      return false;
     }
   }
-  return false; // Taster nicht gedrückt, kein Reset
+  return false;
 }
 
 void setup() {
@@ -82,15 +82,15 @@ void setup() {
   else
     Serial.println("WLAN-Zugangsdaten gelöscht");
 
-  WiFi.mode(WIFI_STA); // Station Mode
+  WiFi.mode(WIFI_STA);
   Serial.println("Verbinde mit gespeichertem WLAN...");
-  WiFi.begin(); // Verbindet mit gespeicherten Zugangsdaten
-  delay(10000); // Warte 5 Sekunden auf Verbindung
-  
-  if (WiFi.status() != WL_CONNECTED) {    
+  WiFi.begin();
+  delay(10000);
+
+  if (WiFi.status() != WL_CONNECTED) {
     Serial.println("setup(): Starte WPS...");
     WiFi.beginWPSConfig();
-    int timeout = 20; // 20 Sekunden Timeout
+    int timeout = 20;
     while (WiFi.status() != WL_CONNECTED && timeout > 0) {
       delay(1000);
       Serial.print(".");
@@ -102,8 +102,7 @@ void setup() {
     Serial.println("\nVerbunden mit: " + WiFi.SSID());
     Serial.print("IP-Adresse: ");
     Serial.println(WiFi.localIP());
-  }
-  else {
+  } else {
     Serial.println("\nNicht verbunden.");
     Serial.println("Starte LED-Blinken als Hinweis...");
     blinkLED();
@@ -112,27 +111,6 @@ void setup() {
 
 void loop() {
   Serial.println("Verbunden...");
-  delay(1000);
-
-  // if (Serial.available() > 0) {
-  //   String input = Serial.readStringUntil('\n');
-  //   input.trim();
-  //   Serial.print("Eingegeben: ");
-  //   Serial.println(input);
-  //   if (input == "WPS") {
-  //     Serial.println("Starte WPS...");
-  //     if (WiFi.beginWPSConfig()) {
-  //       Serial.println("WPS erfolgreich!");
-  //       Serial.print("Verbunden mit: ");
-  //       Serial.println(WiFi.SSID());
-  //       Serial.print("IP-Adresse: ");
-  //       Serial.println(WiFi.localIP());
-  //     } else {
-  //       Serial.println("WPS fehlgeschlagen.");
-  //     }
-  //   } else {
-  //     Serial.println("Unknown");
-  //   }
-  // }
+  delay(5000);
 }
 
