@@ -86,7 +86,7 @@ void setup() {
   Serial.println("Verbinde mit gespeichertem WLAN...");
   WiFi.begin();
   delay(10000);
-//need test
+
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("setup(): Starte WPS...");
     WiFi.beginWPSConfig();
