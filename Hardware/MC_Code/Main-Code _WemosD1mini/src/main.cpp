@@ -88,7 +88,7 @@ void setup() {
   delay(10000);
 
   if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("setup(): Starte WPS...");
+    Serial.println("Setup: Starte WPS...");
     WiFi.beginWPSConfig();
     int timeout = 20;
     while (WiFi.status() != WL_CONNECTED && timeout > 0) {
