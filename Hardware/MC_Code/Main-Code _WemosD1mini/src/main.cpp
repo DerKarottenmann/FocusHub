@@ -16,6 +16,7 @@
 #define CLEAR_BUTTON_PIN D1
 #define LED_PIN D4
 
+
 void blinkLED() {
   pinMode(LED_PIN, OUTPUT);
   while (true) {
@@ -90,7 +91,7 @@ void setup() {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("Setup: Starte WPS...");
     WiFi.beginWPSConfig();
-    int timeout = 20;
+    int timeout = 200;
     while (WiFi.status() != WL_CONNECTED && timeout > 0) {
       delay(1000);
       Serial.print(".");
@@ -110,7 +111,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Verbunden...");
+  Serial.print(".");
   delay(5000);
 }
 
