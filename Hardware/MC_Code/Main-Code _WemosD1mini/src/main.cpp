@@ -7,7 +7,7 @@
 #define LED_PIN D4                  
 
 // API-Konfiguration
-const char* apiKey = "AIzaSyDg5XWUUOQkl1PvcRtcP5WzICDieYH8QD8";
+const char* apiKey = "AIzaSyBUWS8aT5PF0w9LRaR6tqlmZWyYCrxgXiE";
 const char* postalCode = "80997";         
 const char* countryCode = "DE";  
 
@@ -154,7 +154,7 @@ void setup() {
   getWeather(coords.first, coords.second, apiKey);
 }
 
-// Loop-Funktion: wird wiederholt ausgeführt
+
 void loop() {
   delay(60000);
 }
