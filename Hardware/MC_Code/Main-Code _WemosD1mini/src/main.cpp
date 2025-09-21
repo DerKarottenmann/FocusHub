@@ -11,8 +11,6 @@ const char* apiKey = "AIzaSyBUWS8aT5PF0w9LRaR6tqlmZWyYCrxgXiE";
 const char* postalCode = "80997";         
 const char* countryCode = "DE";  
 
-        
-
 // Fail-Safe LED
 void blinkLED() {
   pinMode(LED_PIN, OUTPUT);
@@ -72,21 +70,29 @@ std::pair<double, double> getCoordinates(const String& plz, const String& land, 
   HTTPClient http;
   String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + plz + "," + land + "&key=" + key;
   WiFiClientSecure client;
-  http.begin(client, url);                 // Verbindung starten
-  int httpCode = http.GET();      // Request ausführen
+  client.setInsecure(); // Zertifikatsprüfung deaktivieren
+  http.begin(client, url);   // Verbindung starten
+  delay(5000);                 
+  int httpCode = http.GET();   // Request ausführen
+  Serial.println("HTTP-Code: " + String(httpCode)); // Debug-Ausgabe
+  delay(5000);
 
   double lat = 0.0, lng = 0.0;
 
   if (httpCode == 200) {               // 200 = Erfolg
     String payload = http.getString(); // Antwort als String
-    DynamicJsonDocument doc(2048);     // Maximal 2KB
-    deserializeJson(doc, payload);     // JSON parsen
-
-    if (doc["results"].size() > 0) {
-      lat = doc["results"][0]["geometry"]["location"]["lat"];
-      lng = doc["results"][0]["geometry"]["location"]["lng"];
+    DynamicJsonDocument doc(4096);     // Maximal 4KB
+    DeserializationError error = deserializeJson(doc, payload);
+    if (error) {
+      Serial.print("JSON-Fehler: ");
+      Serial.println(error.c_str());
     } else {
-      Serial.println("Keine gültigen Koordinaten gefunden.");
+      if (doc["results"].size() > 0) {
+        lat = doc["results"][0]["geometry"]["location"]["lat"];
+        lng = doc["results"][0]["geometry"]["location"]["lng"];
+      } else {
+        Serial.println("Keine gültigen Koordinaten gefunden.");
+      }
     }
   } else {
     Serial.println("Fehler beim Abrufen der Koordinaten.");
@@ -102,25 +108,34 @@ void getWeather(double lat, double lng, const String& key) {
   String url = "https://weather.googleapis.com/v1/currentConditions:lookup?key=" + key +
                "&location.latitude=" + String(lat, 6) + "&location.longitude=" + String(lng, 6);
   WiFiClientSecure client;          
-  http.begin(client ,url);                 
-  int httpCode = http.GET();      
+  client.setInsecure(); // Zertifikatsprüfung deaktivieren
+  http.begin(client ,url);
+  delay(5000);                 
+  int httpCode = http.GET();
+  Serial.println("HTTP-Code: " + String(httpCode)); // Debug-Ausgabe
+  delay(5000);      
 
   if (httpCode == 200) {
-    String payload = http.getString(); 
+    String payload = http.getString();
+    delay(500); 
     DynamicJsonDocument doc(2048);     
-    deserializeJson(doc, payload);     
+    DeserializationError error = deserializeJson(doc, payload);
+    if (error) {
+      Serial.print("JSON-Fehler: ");
+      Serial.println(error.c_str());
+    } else {
+      // Daten extrahieren
+      double temp = doc["temperature"]["degrees"];
+      double humidity = doc["relativeHumidity"];
+      double wind = doc["wind"]["speed"]["value"];
+      String condition = doc["weatherCondition"]["description"]["text"];
 
-    // Daten extrahieren
-    double temp = doc["temperature"]["degrees"];
-    double humidity = doc["relativeHumidity"];
-    double wind = doc["wind"]["speed"]["value"];
-    String condition = doc["weatherCondition"]["description"]["text"];
-
-    // Serial-Ausgabe
-    Serial.println("Temperatur: " + String(temp) + "°C");
-    Serial.println("Luftfeuchtigkeit: " + String(humidity) + "%");
-    Serial.println("Wind: " + String(wind) + " km/h");
-    Serial.println("Zustand: " + condition);
+      // Serial-Ausgabe
+      Serial.println("Temperatur: " + String(temp) + "°C");
+      Serial.println("Luftfeuchtigkeit: " + String(humidity) + "%");
+      Serial.println("Wind: " + String(wind) + " km/h");
+      Serial.println("Zustand: " + condition);
+    }
   } else {
     Serial.println("Fehler beim Abrufen der Wetterdaten.");
   }
@@ -148,7 +163,7 @@ void setup() {
 
   // Koordinaten abrufen
   auto coords = getCoordinates(postalCode, countryCode, apiKey);
-  Serial.println("Koordinaten: " + String(coords.first, 6) + ", " + String(coords.second, 6));
+  Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
 
   // Wetterdaten abrufen
   getWeather(coords.first, coords.second, apiKey);
@@ -157,4 +172,8 @@ void setup() {
 
 void loop() {
   delay(60000);
+  Serial.println("\n--- Aktualisiere Wetterdaten ---");
+  auto coords = getCoordinates(postalCode, countryCode, apiKey);
+  Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
+  getWeather(coords.first, coords.second, apiKey);
 }
