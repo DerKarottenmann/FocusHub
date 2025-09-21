@@ -72,10 +72,10 @@ std::pair<double, double> getCoordinates(const String& plz, const String& land, 
   WiFiClientSecure client;
   client.setInsecure(); // Zertifikatsprüfung deaktivieren
   http.begin(client, url);   // Verbindung starten
-  delay(5000);                 
+  delay(500);                 
   int httpCode = http.GET();   // Request ausführen
   Serial.println("HTTP-Code: " + String(httpCode)); // Debug-Ausgabe
-  delay(5000);
+  delay(500);
 
   double lat = 0.0, lng = 0.0;
 
@@ -110,10 +110,10 @@ void getWeather(double lat, double lng, const String& key) {
   WiFiClientSecure client;          
   client.setInsecure(); // Zertifikatsprüfung deaktivieren
   http.begin(client ,url);
-  delay(5000);                 
+  delay(500);                 
   int httpCode = http.GET();
   Serial.println("HTTP-Code: " + String(httpCode)); // Debug-Ausgabe
-  delay(5000);      
+  delay(500);      
 
   if (httpCode == 200) {
     String payload = http.getString();
