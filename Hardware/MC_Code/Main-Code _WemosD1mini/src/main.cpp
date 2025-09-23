@@ -101,7 +101,7 @@ std::pair<double, double> getCoordinates(const String& plz, const String& land, 
   http.end(); // Verbindung schließen
   return std::make_pair(lat, lng);
 }
-
+//test
 // Holt Wetterdaten 
 void getWeather(double lat, double lng, const String& key) {
   HTTPClient http;
