@@ -1,10 +1,16 @@
 #include <Arduino.h>                
 #include <ESP8266WiFi.h>            
 #include <ESP8266HTTPClient.h>     
-#include <ArduinoJson.h>            
+#include <ArduinoJson.h>  
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 
 #define CLEAR_BUTTON_PIN D1         
-#define LED_PIN D4                  
+#define LED_PIN D4 
+
+// LCD-Display init
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // API-Konfiguration
 const char* apiKey = "AIzaSyBUWS8aT5PF0w9LRaR6tqlmZWyYCrxgXiE";
@@ -101,7 +107,7 @@ std::pair<double, double> getCoordinates(const String& plz, const String& land, 
   http.end(); // Verbindung schließen
   return std::make_pair(lat, lng);
 }
-//test
+
 // Holt Wetterdaten 
 void getWeather(double lat, double lng, const String& key) {
   HTTPClient http;
@@ -145,7 +151,15 @@ void getWeather(double lat, double lng, const String& key) {
 
 
 void setup() {
-  Serial.begin(115200);           
+  Serial.begin(115200); 
+  Wire.begin(D5, D6);
+  lcd.init();
+  lcd.print("25");
+  lcd.write(223); // Gradzeichen
+  lcd.print("C");
+
+  delay(5000);
+  lcd.backlight();          
   delay(1000);
 
   // WLAN-Reset prüfen
