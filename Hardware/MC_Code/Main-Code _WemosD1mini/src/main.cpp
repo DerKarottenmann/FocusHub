@@ -159,7 +159,7 @@ void getWeather(double lat, double lng, const String& key) {
 
 
 void setup() {
-  Serial.begin(115200); 
+  Serial.begin(9600); 
   Wire.begin(D5, D6);
   lcd.init();
   lcd.print("25");
