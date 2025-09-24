@@ -38,17 +38,25 @@ bool checkAndResetWifi() {
     pressedTime = millis();
     while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
       if (millis() - pressedTime >= requiredHold) {
+        WiFi.persistent(true);      // Änderungen im Flash erlauben
         WiFi.disconnect(true);     // WLAN_Daten löschen
+        WiFi.mode(WIFI_STA);        // Stational-Mode aktivieren
         delay(1000);
         Serial.println("Starte WPS...");
-        while (WiFi.status() != WL_CONNECTED) {
-          if (WiFi.beginWPSConfig()) {
-            Serial.println("WPS erfolgreich!");
+        if (WiFi.beginWPSConfig()) {
+          delay(5000); // Warte auf Verbindung
+          if (WiFi.status() == WL_CONNECTED) {
+            Serial.println("WPS erfolgreich verbunden!");
+            Serial.println("Verbunden mit: " + WiFi.SSID());
+            Serial.println("IP: " + WiFi.localIP().toString());
             return true;
           } else {
-            Serial.println("WPS fehlgeschlagen.");
+            Serial.println("WPS-Daten empfangen, aber Verbindung fehlgeschlagen.");
             blinkLED();
           }
+        } else {
+          Serial.println("WPS fehlgeschlagen.");
+          blinkLED();
         }
         return true;
       }
