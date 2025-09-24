@@ -6,7 +6,7 @@
 #include <LiquidCrystal_I2C.h>
 
 
-#define CLEAR_BUTTON_PIN D1         
+#define CLEAR_BUTTON_PIN D3         
 #define LED_PIN D4 
 
 // LCD-Display init
@@ -159,8 +159,8 @@ void getWeather(double lat, double lng, const String& key) {
 
 
 void setup() {
-  Serial.begin(115200); 
-  Wire.begin(D5, D6);
+  Serial.begin(9600); 
+  Wire.begin(D2, D1);
   lcd.init();
   lcd.print("25");
   lcd.write(223); // Gradzeichen
