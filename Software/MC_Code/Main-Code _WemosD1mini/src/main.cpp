@@ -6,16 +6,20 @@
 #include <LiquidCrystal_I2C.h>
 
 
-#define CLEAR_BUTTON_PIN D3         
+#define CLEAR_BUTTON_PIN D8         
 #define LED_PIN D4 
-//test
+
 // LCD-Display init
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // API-Konfiguration
 const char* apiKey = "AIzaSyBUWS8aT5PF0w9LRaR6tqlmZWyYCrxgXiE";
 const char* postalCode = "80997";         
-const char* countryCode = "DE";  
+const char* countryCode = "DE"; 
+String Temperatur;
+String Luftfeuchtigkeit;
+String Wind;
+String Zustand; 
 
 // Fail-Safe LED
 void blinkLED() {
@@ -43,6 +47,8 @@ bool checkAndResetWifi() {
         WiFi.mode(WIFI_STA);        // Stational-Mode aktivieren
         delay(1000);
         Serial.println("Starte WPS...");
+        lcd.setCursor(0,1);
+        lcd.print("Starte WPS...");
         if (WiFi.beginWPSConfig()) {
           delay(5000); // Warte auf Verbindung
           if (WiFi.status() == WL_CONNECTED) {
@@ -146,9 +152,13 @@ void getWeather(double lat, double lng, const String& key) {
 
       // Serial-Ausgabe
       Serial.println("Temperatur: " + String(temp) + "°C");
+      Temperatur = String(temp);
       Serial.println("Luftfeuchtigkeit: " + String(humidity) + "%");
+      Luftfeuchtigkeit = String(humidity);
       Serial.println("Wind: " + String(wind) + " km/h");
+      Wind = String(wind);
       Serial.println("Zustand: " + condition);
+      Zustand = condition;
     }
   } else {
     Serial.println("Fehler beim Abrufen der Wetterdaten.");
@@ -159,12 +169,11 @@ void getWeather(double lat, double lng, const String& key) {
 
 
 void setup() {
-  Serial.begin(9600); 
+  Serial.begin(115200); 
   Wire.begin(D2, D1);
   lcd.init();
-  lcd.print("25");
-  lcd.write(223); // Gradzeichen
-  lcd.print("C");
+  lcd.backlight();
+  lcd.print("Starte...");
 
   delay(5000);
   lcd.backlight();          
@@ -198,4 +207,20 @@ void loop() {
   auto coords = getCoordinates(postalCode, countryCode, apiKey);
   Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
   getWeather(coords.first, coords.second, apiKey);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(Temperatur);
+  lcd.write(223); // Gradzeichen ASCII
+  lcd.print("C");
+  lcd.setCursor(5,0);
+  lcd.print(Luftfeuchtigkeit);
+  lcd.write(37);
+  lcd.setCursor(0,1);
+  lcd.print(Wind);
+  lcd.print("km/h");
+  lcd.setCursor(8,1);
+  lcd.print(Zustand);
+
+
+
 }
