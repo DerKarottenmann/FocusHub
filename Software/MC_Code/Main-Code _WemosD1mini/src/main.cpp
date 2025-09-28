@@ -57,7 +57,7 @@ bool checkAndResetWifi() {
             Serial.println("IP: " + WiFi.localIP().toString());
             return true;
           } else {
-            Serial.println("WPS-Daten empfangen, aber Verbindung fehlgeschlagen.");
+            Serial.println("Verbindung fehlgeschlagen.");
             blinkLED();
           }
         } else {
@@ -175,9 +175,7 @@ void setup() {
   lcd.backlight();
   lcd.print("Starte...");
 
-  delay(5000);
-  lcd.backlight();          
-  delay(1000);
+  delay(5000);          
 
   // WLAN-Reset prüfen
   if (!checkAndResetWifi()) {
