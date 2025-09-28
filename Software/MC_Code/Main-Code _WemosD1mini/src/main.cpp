@@ -51,7 +51,8 @@ bool checkAndResetWifi() {
         lcd.setCursor(0,1);
         lcd.print("Starte WPS...");
         if (WiFi.beginWPSConfig()) {
-          delay(5000); // Warte auf Verbindung
+          Serial.println("Warte auf Verbindung...");  //Stoppt bei 56 Zeile bug
+          delay(20000); // Warte auf Verbindung
           if (WiFi.status() == WL_CONNECTED) {
             Serial.println("WPS erfolgreich verbunden!");
             Serial.println("Verbunden mit: " + WiFi.SSID());
