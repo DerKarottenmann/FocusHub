@@ -7,7 +7,7 @@
 #include "secret.h"                    // Enthält API-Key + PLZ + Land
 
 
-#define CLEAR_BUTTON_PIN D8         
+#define CLEAR_BUTTON_PIN D3         
 #define LED_PIN D4 
 
 // LCD-Display init
@@ -59,10 +59,14 @@ bool checkAndResetWifi() {
             return true;
           } else {
             Serial.println("Verbindung fehlgeschlagen.");
+            lcd.setCursor(0,1);
+            lcd.print("!Connection");
             blinkLED();
           }
         } else {
           Serial.println("WPS fehlgeschlagen.");
+          lcd.setCursor(0,1);
+          lcd.print("WPS failed."); 
           blinkLED();
         }
         return true;
@@ -183,6 +187,8 @@ void setup() {
     Serial.println("Verbinde mit gespeichertem WLAN...");
     if (!connectWiFi()) {
       Serial.println("Verbindung fehlgeschlagen. Starte Blinken...");
+      lcd.setCursor(0,1);
+      lcd.print("!Connect");
       blinkLED();
     }
   }
