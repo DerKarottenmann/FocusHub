@@ -4,7 +4,7 @@
 #include <ArduinoJson.h>  
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "keys.h"                    // Enthält API-Key + PLZ + Land
+#include "codes.h"                    // Enthält API-Key + PLZ + Land
 
 
 #define CLEAR_BUTTON_PIN D8         
