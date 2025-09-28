@@ -4,6 +4,7 @@
 #include <ArduinoJson.h>  
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include "keys.h"                    // Enthält API-Key + PLZ + Land
 
 
 #define CLEAR_BUTTON_PIN D8         
@@ -13,9 +14,9 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // API-Konfiguration
-const char* apiKey = "AIzaSyBUWS8aT5PF0w9LRaR6tqlmZWyYCrxgXiE";
-const char* postalCode = "80997";         
-const char* countryCode = "DE"; 
+const char* apiKey = API_KEY;
+const char* postalCode = POSTAL_CODE;         
+const char* countryCode = COUNTRY_CODE; 
 String Temperatur;
 String Luftfeuchtigkeit;
 String Wind;
@@ -181,7 +182,7 @@ void setup() {
   if (!checkAndResetWifi()) {
     Serial.println("Verbinde mit gespeichertem WLAN...");
     if (!connectWiFi()) {
-      Serial.println("Verbindung fehlgeschlagen. Starte LED-Blinken...");
+      Serial.println("Verbindung fehlgeschlagen. Starte Blinken...");
       blinkLED();
     }
   }
@@ -201,7 +202,7 @@ void setup() {
 
 void loop() {
   delay(60000);
-  Serial.println("\n--- Aktualisiere Wetterdaten ---");
+  Serial.println("\n Aktualisierte Wetterdaten ");
   auto coords = getCoordinates(postalCode, countryCode, apiKey);
   Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
   getWeather(coords.first, coords.second, apiKey);
