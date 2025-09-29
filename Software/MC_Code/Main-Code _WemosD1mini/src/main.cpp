@@ -9,7 +9,8 @@
 
 #define CLEAR_BUTTON_PIN D3         
 #define LED_PIN D4 
-
+//SDA-Pin D2
+//SCL-Pin D1
 // LCD-Display init
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -43,16 +44,24 @@ bool checkAndResetWifi() {
     pressedTime = millis();
     while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
       if (millis() - pressedTime >= requiredHold) {
+        WiFi.begin("", "");
         WiFi.persistent(true);      // Änderungen im Flash erlauben
-        WiFi.disconnect(true);     // WLAN_Daten löschen
+        WiFi.disconnect(true); 
+        Serial.println("WLAN-Daten gelöscht.");    // WLAN_Daten löschen
         WiFi.mode(WIFI_STA);        // Stational-Mode aktivieren
         delay(1000);
         Serial.println("Starte WPS...");
         lcd.setCursor(0,1);
         lcd.print("Starte WPS...");
         if (WiFi.beginWPSConfig()) {
-          Serial.println("Warte auf Verbindung...");  //Stoppt bei 56 Zeile bug
-          delay(20000); // Warte auf Verbindung
+          Serial.println("Warte auf Verbindung..."); 
+           
+          unsigned long startTime = millis();
+          while (WiFi.status() != WL_CONNECTED && millis() - startTime < 30000) {
+            delay(500);
+            Serial.print(".");
+          }
+              
           if (WiFi.status() == WL_CONNECTED) {
             Serial.println("WPS erfolgreich verbunden!");
             Serial.println("Verbunden mit: " + WiFi.SSID());
