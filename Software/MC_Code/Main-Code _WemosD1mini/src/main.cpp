@@ -33,7 +33,7 @@ void blinkLED() {
     delay(500);
   }
 }
-
+//Eigenes Netzwerk aufspannen statt WPS
 // Bei Tasterdruck WlanData gelöscht + WPS starten
 bool checkAndResetWifi() {
   pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP); // Taster hat PullupWds
