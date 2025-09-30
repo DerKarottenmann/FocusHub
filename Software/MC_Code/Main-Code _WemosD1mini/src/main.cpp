@@ -39,7 +39,7 @@ bool checkAndResetWifi() {
   pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP); // Taster hat PullupWds
   unsigned long pressedTime = 0;
   const unsigned long requiredHold = 5000; 
-
+//Does this count as a commit in my controbutions Graph test.
   if (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
     pressedTime = millis();
     while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
