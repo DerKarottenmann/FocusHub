@@ -28,6 +28,18 @@
 - **Individuelle Farben**  
   Passe die Farben des Geräts an dein Setup und deinen persönlichen Vibe an.
 
+- **2 LED-Leisten**  
+  Zwei separate LED‑Leisten visualisieren parallel Pausen- und Lernzeiten.
+
+- **Individuelles LED‑Panel**  
+  Kleines LED‑Panel zur Darstellung der Streak (Lern-/Arbeitsserien) in eigener Visualisierung.
+
+- **Tasten & Push‑Drehrad**  
+  Physische Bedienelemente (z. B. ein Push‑Drehrad) zur schnellen Steuerung und Einstellung direkt am Gerät.
+
+- **WLAN & WPS (ESP32)**  
+  Netzwerkfunktionalität über ein ESP32‑Modul, WPS‑Unterstützung für einfache Einrichtung und Online‑Dienste.
+
 - **Keine externe App notwendig**  
   Funktioniert vollständig eigenständig – es wird keine zusätzliche App oder andere Hilfsmittel benötigt. Alle Funktionen sind direkt am Gerät verfügbar.
 
