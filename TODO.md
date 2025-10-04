@@ -31,7 +31,7 @@
 
 ## Korbi
 
-- [ ] Funktion: Anzahl_LEDs und Zeit als Parameter; Gibt zurück wie viele LEDs in einer Minute angeschaltet werden müssen, damit der LED-Balken relativ zur Gesamtzeit voranschreitet
+- [ ] 
 
 
 
@@ -40,7 +40,7 @@
 # LOG: Erledigte Aufgabe + Name + Datum
 
     - TODO-Liste erstellt von Yannik(4_Okt_2025)
-
+    - Funktion: Berechnet aus Anteil verstrichener Zeit, wie viele von n LEDs eingeschaltet sein sollen, rundet auf die nächste ganze Zahl und begrenzt das Ergebnis auf 0 bis n von Korbi(5_Okt_2025)
 
 
 
