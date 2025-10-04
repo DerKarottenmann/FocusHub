@@ -18,6 +18,7 @@
 ## Yannik
 
 - [ ] PWM(PulsWeitenModulation) für Motoren/ evtl. LEDs
+- [ ] PCB-Design mit KiCAD
 
 ## Fernando
 
