@@ -13,7 +13,7 @@
 //SCL-Pin D1
 // LCD-Display init
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-
+// test
 // API-Konfiguration
 const char* apiKey = API_KEY;
 const char* postalCode = POSTAL_CODE;         
