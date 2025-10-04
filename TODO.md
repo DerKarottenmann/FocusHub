@@ -13,8 +13,6 @@
 
 
 
-
-
 # TODO: Aufgeteilt:
 
 ## Yannik
@@ -23,11 +21,18 @@
 
 ## Fernando
 
-- [ ] 
+- [ ] Git Hub Task werden Automatisch erledigt wenn abgehakt 
+- [ ] Website Ansatz für Verbindung(Wlan) 
 
 ## Timon
 
 - [ ] 
+
+## Korbi
+
+- [ ] Funktion: Anzahl_LEDs und Zeit als Parameter; Gibt zurück wie viele LEDs in einer Minute angeschaltet werden müssen, damit der LED-Balken relativ zur Gesamtzeit voranschreitet
+
+
 
 
 
