@@ -10,14 +10,14 @@
 - **Timer Customisation**  
   Passe die Länge von Arbeits- und Pausenphasen individuell an deine Bedürfnisse an.
 
-- **Retro-Display für Ziele & Wetter**  
-  Ein einziges (retro-)Display zeigt sowohl deine Ziele und Erinnerungen als auch Wetterdaten wie Temperatur, Luftfeuchtigkeit und Windstärke an. Bei mehreren Zielen werden diese als durchlaufender oder wechselnder Schriftzug dargestellt.
+- **OLED-Display für Ziele & Wetter**  
+  Ein einziges (OLED)Display zeigt sowohl deine Ziele und Erinnerungen als auch Wetterdaten wie Temperatur, Luftfeuchtigkeit und Windstärke an. Bei mehreren Zielen werden diese als durchlaufender oder wechselnder Schriftzug dargestellt.
 
 - **Progress Ring**  
   Ein Fortschrittsring zeigt den prozentualen Lernfortschritt des gesamten Tages – nicht nur eines einzelnen Intervalls.
 
 - **Vibration & Sound**  
-  Sanfte Vibration oder entspannende Töne erinnern dich an Pausen oder den Lernbeginn.
+  Sanfte Vibration erinnern dich an Pausen oder den Lernbeginn.
 
 - **Streak-System**  
   Baue eine Lern- oder Arbeitsstreak auf (ähnlich wie bei Duolingo) und erkenne, wann du aktiv warst.
@@ -33,15 +33,16 @@
 
 - **Individuelles LED‑Panel**  
   Kleines LED‑Panel zur Darstellung der Streak (Lern-/Arbeitsserien) in eigener Visualisierung.
+  Evtl ähnlich wie der GitHub Conributions Graph
 
 - **Tasten & Push‑Drehrad**  
   Physische Bedienelemente (z. B. ein Push‑Drehrad) zur schnellen Steuerung und Einstellung direkt am Gerät.
 
 - **WLAN & WPS (ESP32)**  
-  Netzwerkfunktionalität über ein ESP32‑Modul, WPS‑Unterstützung für einfache Einrichtung und Online‑Dienste.
+  Netzwerkfunktionalität über ein ESP32‑Modul, Einfache Einrichtung über eine Website für Online‑Dienste.
 
-- **Keine externe App notwendig**  
-  Funktioniert vollständig eigenständig – es wird keine zusätzliche App oder andere Hilfsmittel benötigt. Alle Funktionen sind direkt am Gerät verfügbar.
+- **Web‑Konfiguration (Wemos hostet Website)**
+  Der Wemos stellt auf Knopfdruck eine Website bereit. Über diese Web‑Seite können SSID und Passwort für das WLAN sowie die Farbgebung und Basis‑Einstellungen des Geräts sicher eingegeben werden, damit der Wemos die Konfiguration übernimmt. Keine native App nötig — die Konfiguration läuft über den Browser.
 
 ---
 
