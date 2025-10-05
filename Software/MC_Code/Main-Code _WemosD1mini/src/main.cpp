@@ -23,6 +23,10 @@ String Luftfeuchtigkeit;
 String Wind;
 String Zustand; 
 
+// Netzwerk Access Point consts
+const char* ap_ssid = "Wlan_FOCUSHUB";       // Name deines WLANs
+const char* ap_password = "12345678";   // Passwort
+
 // Fail-Safe LED
 void blinkLED() {
   pinMode(LED_PIN, OUTPUT);
@@ -191,6 +195,20 @@ void setup() {
   lcd.print("Starte...");
 
   delay(5000);          
+
+
+  // Setup Access Point (frag Fer)
+
+  Serial.println("Starte Access Point...");
+
+  WiFi.softAP(ap_ssid, ap_password);
+
+  // IP-Adresse ausgeben
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("Access Point IP-Adresse: ");
+  Serial.println(IP);
+  Serial.println("Access Point Password: ");
+  Serial.println(ap_password);
 
   // WLAN-Reset prüfen
   if (!checkAndResetWifi()) {
