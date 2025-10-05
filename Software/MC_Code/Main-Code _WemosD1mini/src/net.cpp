@@ -14,7 +14,8 @@ DNSServer dnsServer;
 IPAddress apIP(192, 168, 4, 1);
 const byte DNS_PORT = 53;
 
-//* HTML für unsere Hotelwlan seite
+//* HTML für unsere Hotelwlan seite 
+//!W-Kommentar mit Hotelwlan
 const char* htmlForm = R"rawliteral(
 <!DOCTYPE html>
 <html>
