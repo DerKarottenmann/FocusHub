@@ -1,9 +1,18 @@
-#include <Arduino.h>                
+#include <Arduino.h>            
+#include <DNSServer.h>    
 #include <ESP8266WiFi.h>            
 #include <ESP8266HTTPClient.h>     
 #include <ArduinoJson.h>  
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <ESP8266WebServer.h>
+#include <DNSServer.h>
+#include <EEPROM.h>
+#include <FS.h>
+#include <LittleFS.h>
+#include "network.h"      // in /include
+#include "eeprom_management.h"      // in /include 
+
 #include "secret.h"                    // Enthält API-Key + PLZ + Land
 
 
@@ -26,6 +35,13 @@ String Zustand;
 // Netzwerk Access Point consts
 const char* ap_ssid = "Wlan_FOCUSHUB";       // Name deines WLANs
 const char* ap_password = "12345678";   // Passwort
+IPAddress apIP(192, 168, 4, 1); // IP des Wemsos im AP-Modus
+const byte DNS_PORT = 53; // Port (53 wird für DNS standartmäßig genutzt)
+
+// server starten
+ESP8266WebServer server(80);
+DNSServer dnsServer;
+
 
 // Fail-Safe LED
 void blinkLED() {
@@ -37,72 +53,7 @@ void blinkLED() {
     delay(500);
   }
 }
-//Eigenes Netzwerk aufspannen statt WPS
-// Bei Tasterdruck WlanData gelöscht + WPS starten
-bool checkAndResetWifi() {
-  pinMode(CLEAR_BUTTON_PIN, INPUT_PULLUP); // Taster hat PullupWds
-  unsigned long pressedTime = 0;
-  const unsigned long requiredHold = 5000; 
 
-  if (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
-    pressedTime = millis();
-    while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
-      if (millis() - pressedTime >= requiredHold) {
-        WiFi.begin("", "");
-        WiFi.persistent(true);      // Änderungen im Flash erlauben
-        WiFi.disconnect(true); 
-        Serial.println("WLAN-Daten gelöscht.");    // WLAN_Daten löschen
-        WiFi.mode(WIFI_STA);        // Stational-Mode aktivieren
-        delay(1000);
-        Serial.println("Starte WPS...");
-        lcd.setCursor(0,1);
-        lcd.print("Starte WPS...");
-        if (WiFi.beginWPSConfig()) {
-          Serial.println("Warte auf Verbindung..."); 
-           
-          unsigned long startTime = millis();
-          while (WiFi.status() != WL_CONNECTED && millis() - startTime < 30000) {
-            delay(500);
-            Serial.print(".");
-          }
-              
-          if (WiFi.status() == WL_CONNECTED) {
-            Serial.println("WPS erfolgreich verbunden!");
-            Serial.println("Verbunden mit: " + WiFi.SSID());
-            Serial.println("IP: " + WiFi.localIP().toString());
-            return true;
-          } else {
-            Serial.println("Verbindung fehlgeschlagen.");
-            lcd.setCursor(0,1);
-            lcd.print("!Connection");
-            blinkLED();
-          }
-        } else {
-          Serial.println("WPS fehlgeschlagen.");
-          lcd.setCursor(0,1);
-          lcd.print("WPS failed."); 
-          blinkLED();
-        }
-        return true;
-      }
-      delay(10);
-    }
-  }
-  return false; // Kein Reset durchgeführt
-}
-
-// Verbindet mit gespeichertem WLAN
-bool connectWiFi() {
-  WiFi.mode(WIFI_STA);             // Stational-Mode aktivieren
-  WiFi.begin();                    // Verbindung
-  int timeout = 20;                // Timeout nach 20 Sekunden (sonts keine Zeit für verbinden)
-
-  while (WiFi.status() != WL_CONNECTED && timeout-- > 0) {
-    delay(1000);
-    Serial.print(".");
-  }
-  return WiFi.status() == WL_CONNECTED;
-}
 
 // Holt die Koordinaten 
 std::pair<double, double> getCoordinates(const String& plz, const String& land, const String& key) {
@@ -189,7 +140,11 @@ void getWeather(double lat, double lng, const String& key) {
 
 void setup() {
   Serial.begin(115200); 
+  LittleFS.begin();
   Wire.begin(D2, D1);
+  server.begin();
+  EEPROM.begin(64); // 32 bytes für SSID + 32 für Passwort
+  Serial.println("Server gestartet");
   lcd.init();
   lcd.backlight();
   lcd.print("Starte...");
@@ -197,28 +152,20 @@ void setup() {
   delay(5000);          
 
 
-  // Setup Access Point (frag Fer)
-
-  Serial.println("Starte Access Point...");
-
-  WiFi.softAP(ap_ssid, ap_password);
-
-  // IP-Adresse ausgeben
-  IPAddress IP = WiFi.softAPIP();
-  Serial.print("Access Point IP-Adresse: ");
-  Serial.println(IP);
-  Serial.println("Access Point Password: ");
-  Serial.println(ap_password);
-
   // WLAN-Reset prüfen
   if (!checkAndResetWifi()) {
     Serial.println("Verbinde mit gespeichertem WLAN...");
-    if (!connectWiFi()) {
-      Serial.println("Verbindung fehlgeschlagen. Starte Blinken...");
-      lcd.setCursor(0,1);
-      lcd.print("!Connect");
-      blinkLED();
+    // Gespeicherte Daten abrufen
+    String ssid = readSSID();
+    String password = readPassword();
+    if (ssid.length() > 0 and password.length() > 0) {
+      // Mit gespeicherten Daten verbinden
+      tryConnectToWiFi(ssid, password);
+    } else {
+      // Keine gespeicherten Daten, AP-Modus starten -> was tun??
+      setupAP(server, dnsServer);
     }
+    
   }
 
   // Verbindung anzeigen
@@ -254,7 +201,6 @@ void loop() {
   lcd.setCursor(8,1);
   lcd.print(Zustand);
 
-
+  server.handleClient();
 
 }
-// Hallo
