@@ -163,10 +163,17 @@ void setup() {
     String password = readPassword();
     if (ssid.length() > 0 and password.length() > 0) {
       // Mit gespeicherten Daten verbinden
-      tryConnectToWiFi(ssid, password);
+      if (tryConnectToWiFi(ssid, password)) {
+        Serial.println("WLAN Verbindung erfolgreich.");
+      } else {
+        // Verbindung fehlgeschlagen, AP-Modus starten
+        setupAP(server, dnsServer);
+        server.begin();
+      }
     } else {
       // Keine gespeicherten Daten, AP-Modus starten -> was tun??
       setupAP(server, dnsServer);
+      server.begin();
     }
     
   }
@@ -204,6 +211,7 @@ void loop() {
   lcd.setCursor(8,1);
   lcd.print(Zustand);
 
+  dnsServer.processNextRequest();
   server.handleClient();
 
 }
