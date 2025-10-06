@@ -26,7 +26,7 @@ extern bool tryConnectToWiFi(String ssid, String password);
 //SCL-Pin D1
 // LCD-Display init
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-
+// test
 // API-Konfiguration
 const char* apiKey = API_KEY;
 const char* postalCode = POSTAL_CODE;         
@@ -185,7 +185,7 @@ void setup() {
 
 
 void loop() {
-  delay(60000);
+  delay(60000); //60 Sekunden warten
   Serial.println("\n Aktualisierte Wetterdaten ");
   auto coords = getCoordinates(postalCode, countryCode, apiKey);
   Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
