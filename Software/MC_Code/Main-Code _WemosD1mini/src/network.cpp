@@ -83,6 +83,7 @@ bool checkAndResetWifi(int CLEAR_BUTTON_PIN = D3, ESP8266WebServer &server, DNSS
     pressedTime = millis();
     while (digitalRead(CLEAR_BUTTON_PIN) == LOW) {
       if (millis() - pressedTime >= requiredHold) {
+        // sollen die gespeicherten WlanDaten gelöscht bzw überschrieben werden? 
 
         // neue WlanDaten holen -> AP starten
         setupAP(server, dnsServer);
