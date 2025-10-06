@@ -1,6 +1,7 @@
 #include <FS.h>
 #include <LittleFS.h>
 #include <EEPROM.h>
+#include "eeprom_management.h"
 
 String readSSID() {
   String ssid;

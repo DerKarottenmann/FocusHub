@@ -15,6 +15,10 @@
 
 #include "secret.h"                    // Enthält API-Key + PLZ + Land
 
+extern bool checkAndResetWifi(ESP8266WebServer& server, DNSServer& dnsServer);
+extern void setupAP(ESP8266WebServer& server, DNSServer& dnsServer);
+extern bool tryConnectToWiFi(String ssid, String password);
+
 
 #define CLEAR_BUTTON_PIN D3         
 #define LED_PIN D4 
@@ -33,8 +37,7 @@ String Wind;
 String Zustand; 
 
 // Netzwerk Access Point consts
-const char* ap_ssid = "Wlan_FOCUSHUB";       // Name deines WLANs
-const char* ap_password = "12345678";   // Passwort
+// Passwort
 IPAddress apIP(192, 168, 4, 1); // IP des Wemsos im AP-Modus
 const byte DNS_PORT = 53; // Port (53 wird für DNS standartmäßig genutzt)
 
@@ -153,7 +156,7 @@ void setup() {
 
 
   // WLAN-Reset prüfen
-  if (!checkAndResetWifi()) {
+  if (!checkAndResetWifi(server, dnsServer)) {
     Serial.println("Verbinde mit gespeichertem WLAN...");
     // Gespeicherte Daten abrufen
     String ssid = readSSID();
