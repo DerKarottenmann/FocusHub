@@ -45,6 +45,7 @@ bool tryConnectToWiFi(String ssid, String password) {
 // Access point (also Hotelwlan seite) einrichten
 void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
   const int DNS_PORT = 53;
+  //IP_Address: 192.168.4.1
   IPAddress apIP(192, 168, 4, 1);
 
   Serial.println("Starte Access Point...");
@@ -76,6 +77,9 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
     server.send(200, "text/html", "<h2>Verbindung wird hergestellt...</h2><p>Du kannst dieses Fenster schließen.</p>");
     tryConnectToWiFi(ssid, password);
   });
+  //MEGADragon2.0
+  //!server.begin();
+  //!Serial.println("HTTP-Server gestartet.");
 }
 
 
