@@ -1,21 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
     <meta charset="utf-8">
     <title>WiFi Setup</title>
     <style>
-      body { font-family: Arial; background-color: #1a1a1a; color: #ddd; text-align: center; }
-      input, button { margin: 10px; padding: 8px; border-radius: 6px; border: none; }
-      button { background-color: #444; color: white; cursor: pointer; }
-      button:hover { background-color: #666; }
+      /* stylesheet, geht auch wo anders */
+      body {
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+        color: #333;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wifi-box {
+        background: #ffffffee;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        padding: 40px 50px;
+        max-width: 360px;
+        width: 90%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .wifi-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        color: #1f4b99;
+        margin-bottom: 25px;
+        font-weight: 600;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      input,
+      button {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        font-size: 15px;
+      }
+
+      input {
+        border: 1px solid #ccc;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4e8ef7;
+        box-shadow: 0 0 6px rgba(78, 142, 247, 0.4);
+      }
+
+      button {
+        background: linear-gradient(90deg, #ff9800, #ffb74d);
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+        margin-bottom: 0;
+      }
+
+      button:hover {
+        background: linear-gradient(90deg, #fb8c00, #ffa726);
+        transform: scale(1.03);
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 400px) {
+        .wifi-box {
+          padding: 30px 25px;
+        }
+
+        h2 {
+          font-size: 18px;
+        }
+      }
     </style>
   </head>
+
   <body>
-    <h2>Verbinde dein Gerät mit deinem WLAN</h2>
-    <form action="/save" method="POST">
-      <input type="text" name="ssid" placeholder="SSID" required><br>
-      <input type="password" name="password" placeholder="Passwort" required><br>
-      <button type="submit">Verbinden</button>
-    </form>
+    <div class="wifi-box">
+      <h2>Verbinde dein Gerät mit deinem WLAN</h2>
+      <form action="/save" method="POST">
+        <input type="text" name="ssid" placeholder="WLAN-Name (SSID)" required>
+        <input type="password" name="password" placeholder="WLAN-Passwort" required>
+        <button type="submit">Verbinden</button>
+      </form>
+    </div>
   </body>
 </html>
