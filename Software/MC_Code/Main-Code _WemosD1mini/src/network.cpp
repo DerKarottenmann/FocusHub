@@ -80,6 +80,7 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
   //MEGADragon2.0
   //!server.begin();
   //!Serial.println("HTTP-Server gestartet.");
+  // muss ich was machen? Schick mir Pm ~md20
 }
 
 
