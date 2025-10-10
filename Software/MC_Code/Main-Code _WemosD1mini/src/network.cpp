@@ -78,9 +78,17 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
     tryConnectToWiFi(ssid, password);
   });
   //MEGADragon2.0
-  //!server.begin();
-  //!Serial.println("HTTP-Server gestartet.");
-  // muss ich was machen? Schick mir Pm ~md20
+  server.begin();
+  Serial.println("HTTP-Server gestartet.");
+  // Hab ich mal unkommentiert, weil sonst natürlich about blank kommt - der server ist dann nie online wenn man noch keine verbindung hatte.
+
+
+  // Ich dachte es funktioniert auch so, aber vielleicht braucht man das processing während der verbindung schon
+  while (WiFi.getMode() == WIFI_AP) {
+    dnsServer.processNextRequest();
+    server.handleClient();
+    delay(10);
+  }
 }
 
 
