@@ -12,8 +12,6 @@
 - Update Branches
 
 
-
-
 # TODO: Aufgeteilt:
 
 ## Yannik
