@@ -1,4 +1,4 @@
-// When using the code, please replace "keys_example.h" with your own "keys.h" file containing your actual keys.
+// When using the code, please replace "keys_example.h" with your own "secret.h" file containing your actual keys.
 // secrets.example.h
 #pragma once
 const char* API_KEY = "Google_API_Key_here";
