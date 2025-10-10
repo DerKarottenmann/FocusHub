@@ -77,6 +77,12 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
     server.send(200, "text/html", "<h2>Verbindung wird hergestellt...</h2><p>Du kannst dieses Fenster schließen.</p>");
     tryConnectToWiFi(ssid, password);
   });
+
+   server.onNotFound([&server]() {
+    server.sendHeader("Location", String("http://") + WiFi.softAPIP().toString() + "/", true); // -> redirect
+    server.send(302, "text/plain", "");
+  });
+
   //MEGADragon2.0
   server.begin();
   Serial.println("HTTP-Server gestartet.");
