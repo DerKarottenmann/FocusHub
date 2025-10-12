@@ -9,7 +9,8 @@
 
 
 # TODO unsortiert: Bsp: Zu erledigende Sache + Anzahl Personen benötigt + Datum + Name des Erstellers
-- Update Branches
+- Komponenten ansteuern
+
 
 
 # TODO: Aufgeteilt:
@@ -29,7 +30,7 @@
 
 ## Korbi
 
-- [ ] 
+- [ ] 3D-Design
 
 
 
