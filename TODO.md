@@ -9,8 +9,7 @@
 
 
 # TODO unsortiert: Bsp: Zu erledigende Sache + Anzahl Personen benötigt + Datum + Name des Erstellers
-
-
+- Update Branches
 
 
 # TODO: Aufgeteilt:
@@ -22,7 +21,6 @@
 
 ## Fernando
 
-- [ ] Git Hub Task werden Automatisch erledigt wenn abgehakt 
 - [ ] Website Ansatz für Verbindung(Wlan) 
 
 ## Timon
