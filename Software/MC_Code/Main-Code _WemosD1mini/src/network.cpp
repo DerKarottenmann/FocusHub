@@ -62,8 +62,14 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
 
   server.on("/", [&server]() {
     File file = LittleFS.open("/AP_form.html", "r");
-    server.streamFile(file, "text/html");
-    file.close();
+    if (!file) {
+      server.send(500, "text/plain", "File not found");
+      return;
+    }
+    Serial.println(file);
+    // server.streamFile(file, "text/html");
+    server.send(200, "text/html", "hellö wörld");
+    //file.close();
   });
 
   server.on("/save", HTTP_POST, [&server]() {
