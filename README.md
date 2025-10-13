@@ -1,54 +1,54 @@
 # FocusHub
 
-**FocusHub** ist ein kompaktes Gerät für deinen Schreibtisch, das dir hilft, konzentriert und produktiv zu bleiben. Es vereint moderne Technik mit cleveren Features, um deinen Arbeitsalltag zu optimieren und deine Ziele im Blick zu behalten.
+**FocusHub** is a compact device for your desk that helps you stay focused and productive. It combines modern technology with clever features to optimize your workday and keep your goals in sight.
 
 ## Features
 
 - **Pomodoro Timer**  
-  Verblendete LED-Streifen visualisieren deine Arbeits- und Pausenintervalle nach der Pomodoro-Methode.
+  Integrated LED strips visualize your work and break intervals according to the Pomodoro method.
 
 - **Timer Customisation**  
-  Passe die Länge von Arbeits- und Pausenphasen individuell an deine Bedürfnisse an.
+  Adjust the length of work and break phases to suit your individual needs.
 
-- **OLED-Display für Ziele & Wetter**  
-  Ein einziges (OLED)Display zeigt sowohl deine Ziele und Erinnerungen als auch Wetterdaten wie Temperatur, Luftfeuchtigkeit und Windstärke an. Bei mehreren Zielen werden diese als durchlaufender oder wechselnder Schriftzug dargestellt.
+- **OLED Display for Goals & Weather**  
+  A single (OLED) display shows both your goals and reminders as well as weather data like temperature, humidity, and wind speed. If you have multiple goals, they are displayed as a scrolling or alternating text.
 
 - **Progress Ring**  
-  Ein Fortschrittsring zeigt den prozentualen Lernfortschritt des gesamten Tages – nicht nur eines einzelnen Intervalls.
+  A progress ring shows the percentage of your learning progress for the entire day—not just a single interval.
 
 - **Vibration & Sound**  
-  Sanfte Vibration erinnern dich an Pausen oder den Lernbeginn.
+  Gentle vibrations remind you of breaks or when to start learning.
 
-- **Streak-System**  
-  Baue eine Lern- oder Arbeitsstreak auf (ähnlich wie bei Duolingo) und erkenne, wann du aktiv warst.
+- **Streak System**  
+  Build a learning or work streak (similar to Duolingo) and see when you were active.
 
 - **Battery Backup**  
-  Dank integriertem Akku kannst du FocusHub überallhin mitnehmen und deine Streak auch ohne Stromversorgung aufrechterhalten.
+  Thanks to the built-in battery, you can take FocusHub anywhere and maintain your streak even without a power supply.
 
-- **Individuelle Farben**  
-  Passe die Farben des Geräts an dein Setup und deinen persönlichen Vibe an.
+- **Custom Colors**  
+  Adjust the device’s colors to match your setup and personal vibe.
 
-- **2 LED-Leisten**  
-  Zwei separate LED‑Leisten visualisieren parallel Pausen- und Lernzeiten.
+- **2 LED Strips**  
+  Two separate LED strips visualize break and learning times in parallel.
 
-- **Individuelles LED‑Panel**  
-  Kleines LED‑Panel zur Darstellung der Streak (Lern-/Arbeitsserien) in eigener Visualisierung.
-  Evtl ähnlich wie der GitHub Conributions Graph
+- **Custom LED Panel**  
+  Small LED panel for visualizing your streak (learning/work series) in a unique way.
+  Possibly similar to the GitHub Contributions Graph.
 
-- **Tasten & Push‑Drehrad**  
-  Physische Bedienelemente (z. B. ein Push‑Drehrad) zur schnellen Steuerung und Einstellung direkt am Gerät.
+- **Buttons & Push Dial**  
+  Physical controls (e.g., a push dial) for quick operation and adjustment directly on the device.
 
-- **WLAN & WPS (ESP32)**  
-  Netzwerkfunktionalität über ein ESP32‑Modul, Einfache Einrichtung über eine Website für Online‑Dienste.
+- **Wi-Fi & WPS (ESP32)**  
+  Network functionality via an ESP32 module, easy setup through a website for online services.
 
-- **Web‑Konfiguration (Wemos hostet Website)**
-  Der Wemos stellt auf Knopfdruck eine Website bereit. Über diese Web‑Seite können SSID und Passwort für das WLAN sowie die Farbgebung und Basis‑Einstellungen des Geräts sicher eingegeben werden, damit der Wemos die Konfiguration übernimmt. Keine native App nötig — die Konfiguration läuft über den Browser.
+- **Web Configuration (Wemos hosts website)**
+  The Wemos provides a website at the push of a button. On this website, you can securely enter the SSID and password for Wi-Fi, as well as the device’s color scheme and basic settings, so that Wemos takes over the configuration. No native app needed—the configuration is done via the browser.
 
 ---
 
-## Ziel
+## Goal
 
-FocusHub soll dir helfen, fokussiert zu bleiben, deine Ziele zu erreichen und deinen Alltag smarter zu gestalten – egal ob zu Hause, im Büro oder unterwegs.
+FocusHub is designed to help you stay focused, achieve your goals, and make your everyday life smarter—whether at home, in the office, or on the go.
 
 
 
