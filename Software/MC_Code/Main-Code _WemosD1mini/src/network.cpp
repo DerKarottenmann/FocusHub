@@ -63,24 +63,21 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
   server.on("/", [&server]() {
     File file = LittleFS.open("/AP_form.html", "r");
     if (!file) {
-      server.send(500, "text/plain", "File not found");
+      server.send(404, "text/plain", "File not found");
       return;
     }
-    Serial.println(file);
-    // server.streamFile(file, "text/html");
-    server.send(200, "text/html", "hellö wörld");
-    //file.close();
+    server.streamFile(file, "text/html");
+    file.close();
   });
 
   server.on("/save", HTTP_POST, [&server]() {
-    String ssid = server.arg("ssid");
     String password = server.arg("password");
-
+    String ssid = server.arg("ssid");
     Serial.println("SSID: " + ssid);
     Serial.println("Password: " + password);
-
-    writeWiFiCredentials(ssid, password);
     server.send(200, "text/html", "<h2>Verbindung wird hergestellt...</h2><p>Du kannst dieses Fenster schließen.</p>");
+    
+    writeWiFiCredentials(ssid, password);
     tryConnectToWiFi(ssid, password);
   });
 

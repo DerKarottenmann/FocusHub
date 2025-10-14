@@ -62,9 +62,7 @@ void blinkLED() {
 
 void setup() {
   Serial.begin(115200); 
-  if (!LittleFS.begin()) {
-    Serial.println("An Error has occurred while mounting LittleFS");
-  }
+  LittleFS.begin();
   Wire.begin(D2, D1);
   server.begin();
   EEPROM.begin(64); // 32 bytes für SSID + 32 für Passwort
