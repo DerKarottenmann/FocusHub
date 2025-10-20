@@ -34,7 +34,7 @@
 
 ## Younes
 
-- [ ] 
+- [ ] JSON-Reader: (Farbschema, LED-Ring_Farbe, LedBar1Farbe, LedBar2Farbe, Lernintervall, Lernpause, LernzeitGesamt, SSID, Passwort)
 
 
 
