@@ -52,13 +52,13 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
   WiFi.softAP(ap_ssid, ap_password);
   delay(500);
 
-  IPAddress IP = WiFi.softAPIP();
   Serial.print("Access Point Name: ");
   Serial.println(ap_ssid);
   Serial.println("Access Point Password: ");
   Serial.println(ap_password);
 
   dnsServer.start(DNS_PORT, "*", apIP);
+  server.begin();
 
   server.on("/", [&server]() {
     File file = LittleFS.open("/AP_form.html", "r");
@@ -79,6 +79,7 @@ void setupAP(ESP8266WebServer &server, DNSServer &dnsServer) {
     
     writeWiFiCredentials(ssid, password);
     tryConnectToWiFi(ssid, password);
+    server.stop();
   });
 
    server.onNotFound([&server]() {
@@ -118,5 +119,27 @@ bool checkAndResetWifi(ESP8266WebServer &server, DNSServer &dnsServer) {
     }
   }
   return false;
+}
+
+
+void setupInterfaceServer(ESP8266WebServer &server) {
+  // get Ip and print
+  Serial.print("Hosting interface at: ");
+  Serial.println(WiFi.localIP());
+  // server starten
+  server.begin();
+  Serial.println("Server gestartet");
+  
+
+  server.on("/", [&server]() {
+    File file = LittleFS.open("interface/index.html", "r");
+    if (!file) {
+      server.send(404, "text/plain", "File not found");
+      return;
+    }
+    server.streamFile(file, "text/html");
+    file.close();
+  });
+
 }
 

@@ -21,7 +21,7 @@ extern void setupAP(ESP8266WebServer& server, DNSServer& dnsServer);
 extern bool tryConnectToWiFi(String ssid, String password);
 extern std::tuple<std::string, std::string, std::string, std::string> getWeather(double lat, double lng, const String& key);
 extern std::pair<double, double> getCoordinates(const String& plz, const String& land, const String& key);
-
+extern void setupInterfaceServer(ESP8266WebServer &server);
 
 
 #define CLEAR_BUTTON_PIN D3         
@@ -44,6 +44,7 @@ String Zustand;
 // server starten
 ESP8266WebServer server(80);
 DNSServer dnsServer;
+ESP8266WebServer interface_server(81);
 
 
 // was ist das?
@@ -64,7 +65,6 @@ void setup() {
   Serial.begin(115200); 
   LittleFS.begin();
   Wire.begin(D2, D1);
-  server.begin();
   EEPROM.begin(64); // 32 bytes für SSID + 32 für Passwort
   Serial.println("Server gestartet");
   lcd.init();
@@ -87,14 +87,17 @@ void setup() {
       } else {
         // Verbindung fehlgeschlagen, AP-Modus starten
         setupAP(server, dnsServer);
-        server.begin();
       }
     } else {
       // Keine gespeicherten Daten, AP-Modus starten -> was tun??
       setupAP(server, dnsServer);
-      server.begin();
     }
     
+  }
+  else {
+    Serial.println("WLAN zurückgesetzt, im AP-Modus gestartet.");
+    writeWiFiCredentials("", "");
+    setupAP(server, dnsServer);
   }
 
   // Verbindung anzeigen
@@ -105,6 +108,8 @@ void setup() {
   auto coords = getCoordinates(postalCode, countryCode, apiKey);
   Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
 
+  // start interface
+  setupInterfaceServer(interface_server);
   // Wetterdaten abrufen
   getWeather(coords.first, coords.second, apiKey);
 }
@@ -132,5 +137,6 @@ void loop() {
 
   dnsServer.processNextRequest();
   server.handleClient();
+  interface_server.handleClient();
 
 }
