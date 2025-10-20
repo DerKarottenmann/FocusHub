@@ -39,12 +39,13 @@ String Temperatur;
 String Luftfeuchtigkeit;
 String Wind;
 String Zustand; 
+int frame_counter = 0;
 
 
 // server starten
 ESP8266WebServer server(80);
 DNSServer dnsServer;
-ESP8266WebServer interface_server(81);
+ESP8266WebServer interface_server(8080);
 
 
 // was ist das?
@@ -116,25 +117,27 @@ void setup() {
 
 
 void loop() {
-  delay(60000); //60 Sekunden warten
-  Serial.println("\n Aktualisierte Wetterdaten ");
-  auto coords = getCoordinates(postalCode, countryCode, apiKey);
-  Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
-  getWeather(coords.first, coords.second, apiKey);
-  lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print(Temperatur);
-  lcd.write(223); // Gradzeichen ASCII
-  lcd.print("C");
-  lcd.setCursor(5,0);
-  lcd.print(Luftfeuchtigkeit);
-  lcd.write(37);
-  lcd.setCursor(0,1);
-  lcd.print(Wind);
-  lcd.print("km/h");
-  lcd.setCursor(8,1);
-  lcd.print(Zustand);
-
+  delay(1);
+  if (frame_counter % 12000 == 0) {  // alle 10 Minuten aktualisieren
+    Serial.println("\n Aktualisierte Wetterdaten ");
+    auto coords = getCoordinates(postalCode, countryCode, apiKey);
+    Serial.println("Koordinaten: " + String(coords.first, 6) + "," + String(coords.second, 6));
+    getWeather(coords.first, coords.second, apiKey);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(Temperatur);
+    lcd.write(223); // Gradzeichen ASCII
+    lcd.print("C");
+    lcd.setCursor(5,0);
+    lcd.print(Luftfeuchtigkeit);
+    lcd.write(37);
+    lcd.setCursor(0,1);
+    lcd.print(Wind);
+    lcd.print("km/h");
+    lcd.setCursor(8,1);
+    lcd.print(Zustand);
+  }
+  frame_counter++;
   dnsServer.processNextRequest();
   server.handleClient();
   interface_server.handleClient();

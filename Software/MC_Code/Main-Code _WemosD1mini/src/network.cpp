@@ -132,7 +132,8 @@ void setupInterfaceServer(ESP8266WebServer &server) {
   
 
   server.on("/", [&server]() {
-    File file = LittleFS.open("interface/index.html", "r");
+    Serial.println("Interface requested");
+    File file = LittleFS.open("index.html", "r");
     if (!file) {
       server.send(404, "text/plain", "File not found");
       return;
